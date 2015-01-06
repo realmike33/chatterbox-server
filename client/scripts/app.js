@@ -24,7 +24,7 @@ var getData = function(data){
 
 var get = function(){
   $.ajax({
-      url: 'https://localhost:3000',
+      url: 'https://localhost:3000/classes/messages',
       type: 'GET',
       success: getData,
       error: function(err){

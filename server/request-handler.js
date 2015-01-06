@@ -1,5 +1,6 @@
 var fs = require('fs');
-
+var postMsg = require('./messages.js').post;
+var getMsg = require('./messages.js').get;
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
   //
@@ -9,11 +10,6 @@ var requestHandler = function(request, response) {
   //
   // Documentation for both request and response can be found in the HTTP section at
   // http://nodejs.org/documentation/api/
-  var routes = {
-    'POST': function(request, response) {
-
-    }
-  }
   // The outgoing status.
   var statusCode = 200;
 
@@ -27,26 +23,15 @@ var requestHandler = function(request, response) {
   headers['Content-Type'] = "JSON";
 
   if(request.method === 'POST'){
-    console.log(request.method, request.url, 'HERE');
-    if(request.url === "/classes/messages"){
-
-      var chunkedData = '';
-      request.on('data', function(chunk){
-        chunkedData += chunk;
-        console.log(chuck);
-      })
-      request.on('end', function() {
-        console.log(chunkedData);
-      })
-      response.writeHead(200, {'content-Type': 'JSON'})
-      response.end(console.log('Here!'));
-    }
+    postMsg[request.url](request, response);
+    response.writeHead(200, {'content-Type': 'JSON'})
+    response.end(console.log('Here!'));
+  }
+  if(request.method === 'GET'){
+    var data = getMsg[request.url](request, response);
   }
 
-  // .writeHead() writes to the request line and headers of the response,
-  // which includes the status and all headers.
-  response.writeHead(statusCode, headers);
-  response.end('Ended');
+
 };
 
 exports.requestHandler = requestHandler;
