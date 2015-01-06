@@ -1,5 +1,6 @@
 var fs = require('fs');
 var postMsg = require('./messages.js').post;
+var getIndex = require('./messages.js').index;
 var getMsg = require('./messages.js').get;
 
 var requestHandler = function(request, response) {
@@ -21,26 +22,27 @@ var requestHandler = function(request, response) {
   //
   // You will need to change this if you are sending something
   // other than plain text, like JSON or HTML.
-  headers['Content-Type'] = "JSON";
+  headers['Content-Type'] = "application/json";
+
 
   if(request.method === 'POST'){
     postMsg[request.url](request, response);
-    response.writeHead(200, {'content-Type': 'JSON'});
+    response.writeHead(200, {'content-Type': 'application/json'});
+    response.end();
   }
   if(request.method === 'GET'){
-    // if(request.method === '/') {
-      fs.readFile('../client/index.html', function(err, data) {
-        if(err) {
-          response.end(err);
-        }
-        response.end(data);
-      });
-    // }
-    // var data = getMsg[request.url](request, response);
+    console.log(request.url);
+    if(request.url === '/classes/messages'){
+      getMsg[request.url](request, response);
+    }else {
+      getIndex[request.url](request, response);
+    }
   }
+  if(request.method === 'OPTIONS'){
+    response.writeHead(204, headers);
+    response.end();
 
-  // response.end({});
-
+  }
 };
 
 exports.requestHandler = requestHandler;

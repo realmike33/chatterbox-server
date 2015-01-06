@@ -24,7 +24,7 @@ var getData = function(data){
 
 var get = function(){
   $.ajax({
-      url: 'https://localhost:3000/classes/messages',
+      url: '/classes/messages',
       type: 'GET',
       success: getData,
       error: function(err){
@@ -54,9 +54,9 @@ setUserName();
 $(document).ready(function(){
   var hello = $('<h1></h1>').text('welcome '+ localStorage.userName);
   $('#main').prepend(hello);
-    // setInterval(function(){
-    //   get();
-    // }, 500)
+    setInterval(function(){
+      get();
+    }, 500)
 
 
   $('#send').on('click', function(){
@@ -70,7 +70,7 @@ $(document).ready(function(){
     };
 
     $.ajax({
-      url: 'http://localhost:3000/classes/chatterbox',
+      url: 'http://localhost:3000/classes/messages',
       type: 'POST',
       data: JSON.stringify(message),
       contentType: 'application/json',
