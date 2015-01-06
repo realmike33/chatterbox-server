@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <title>chatterbox</title>
     <!-- styles -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css">
     <link rel="stylesheet" href="styles/styles.css">
     <!-- dependencies -->
   </head>
   <body>
+    
     <div id="main">
       <!-- Your HTML goes here! -->
       <input class="userMsg" type="text" placeholder="Message"></input>
@@ -17,10 +18,12 @@
       <button id="choose-room" class="btn btn-warning">Select Room</button>
       <ul id="message-list"></ul>
     </div>
-  </body>
-    <script src="bower_components/jquery/jquery.min.js"></script>
+
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/underscore/underscore-min.js"></script>
     <!-- your scripts -->
     <script src="env/config.json"></script>
     <script src="scripts/app.js"></script>
+  </body>
 </html>

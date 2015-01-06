@@ -75,16 +75,15 @@ $(document).ready(function(){
       data: JSON.stringify(message),
       contentType: 'application/json',
       success: function(data){
-
+        console.log(data);
       },
       error: function(err){
         console.log(err);
       }
     });
     $('.userMsg').val('');
-  })
-
-})
+  });
+});
 
 
 

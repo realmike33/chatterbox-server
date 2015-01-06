@@ -1,7 +1,7 @@
 var posts = [];
 
 exports.post = {
-  '/classes/messages': function(request, response) {
+  '/send': function(request, response) {
       var chunkedData = '';
       request.on('data', function(chunk){
         chunkedData += chunk;
@@ -19,9 +19,15 @@ exports.post = {
 
 exports.get = {
   '/classes/messages': function(request, response) {
-
+    fs.readFile('../client/index.html', function(err, data) {
+      if(err) {
+        response.writeHead(404, {'content-Type': 'JSON'});
+        response.end(err);
+      }
+      response.end(post);
+    });
   }
-}
+};
 
 
 

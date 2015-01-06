@@ -1,6 +1,7 @@
 var fs = require('fs');
 var postMsg = require('./messages.js').post;
 var getMsg = require('./messages.js').get;
+
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
   //
@@ -24,13 +25,21 @@ var requestHandler = function(request, response) {
 
   if(request.method === 'POST'){
     postMsg[request.url](request, response);
-    response.writeHead(200, {'content-Type': 'JSON'})
-    response.end(console.log('Here!'));
+    response.writeHead(200, {'content-Type': 'JSON'});
   }
   if(request.method === 'GET'){
-    var data = getMsg[request.url](request, response);
+    // if(request.method === '/') {
+      fs.readFile('../client/index.html', function(err, data) {
+        if(err) {
+          response.end(err);
+        }
+        response.end(data);
+      });
+    // }
+    // var data = getMsg[request.url](request, response);
   }
 
+  // response.end({});
 
 };
 
