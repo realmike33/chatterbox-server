@@ -1,5 +1,5 @@
-// var data = [];
+var data = [];
 
 exports.data = {
-  results: []
+  results: data
 };

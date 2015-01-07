@@ -10,27 +10,28 @@ exports.post = {
       });
       request.on('end', function() {
         if(posts.length >= 100){
-          post.shift();
+          posts.shift();
         }
         posts.push(JSON.parse(chunkedData));
-        console.log(posts);
       });
     },
+  '/classes/typing': function(request, response){
+    var chunkedData = '';
+    request.on('data', function(chunk){
+      chunkedData += chunk;
+    });
+    request.on('end', function(){
+      var user = JSON.parse(chunkedData).userName;
+      var obj = {user : user};
+      response.writeHead(200, {'content-Type': 'application/json'});
+      response.end(JSON.stringify(obj));
+    });
+  }
 };
- // function(request, response){
- //      fs.readFile('/classes/messages', function(err, data) {
- //        if(err) {
- //          response.writeHead(404, {'content-Type': type});
- //          response.end(JSON.stringify(err));
- //        }
- //      response.writeHead(200, {'content-Type': 'application/json'});
- //      response.end(data);
- //    }),
 
 exports.get = {
   '/classes/messages': function(request, response){
     response.writeHead(200, {'content-Type': 'application/json'})
-    console.log(data, 'HERE!');
     response.end(JSON.stringify(data));
   }
 };

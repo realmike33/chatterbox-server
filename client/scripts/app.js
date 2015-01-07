@@ -1,4 +1,49 @@
 // var app = {};
+$('.userMsg').on('keypress', function(e){
+  $.ajax({
+      url: 'http://localhost:3000/classes/typing',
+      type: 'POST',
+      data: JSON.stringify(localStorage),
+      contentType: 'application/json',
+      success: function(data){
+       var user = data.user;
+       console.log(data);
+       drawBubble(user);
+      },
+      error: function(err){
+
+      }
+    });
+});
+
+// setInterval(function(){
+//    $.ajax({
+//       url: 'http://localhost:3000/classes/typing',
+//       type: 'POST',
+//       data: JSON.stringify(localStorage),
+//       contentType: 'application/json',
+//       success: function(data){
+//        var user = data.user;
+//        console.log(data);
+//        drawBubble(user);
+//       },
+//       error: function(err){
+
+//       }
+//     });
+// }, 500)
+
+
+
+
+function drawBubble(user){
+  if(localStorage.userName === user){
+    $('#typing-message').text('You are typing...')
+  } else{
+    $('#typing-message').text(user + ' is typing...')
+  }
+}
+
 
 var appendMessage = function(user, msg, room){
  var $messageList = $('#message-list');
@@ -7,10 +52,9 @@ var appendMessage = function(user, msg, room){
   $('<li class="message"></li>')
   .text(user + ': ' + msg)
   )
-}
+};
 
 var getData = function(data){
-  console.log(data.results);
   $('#message-list').empty();
   data.results.forEach(function(obj){
     var msg = obj.text;
@@ -78,7 +122,7 @@ $(document).ready(function(){
         console.log(data);
       },
       error: function(err){
-        console.log(err);
+
       }
     });
     $('.userMsg').val('');

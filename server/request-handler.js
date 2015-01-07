@@ -2,7 +2,6 @@ var fs = require('fs');
 var postMsg = require('./messages.js').post;
 var getIndex = require('./messages.js').index;
 var getMsg = require('./messages.js').get;
-
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
   //
@@ -26,22 +25,27 @@ var requestHandler = function(request, response) {
 
 
   if(request.method === 'POST'){
-    postMsg[request.url](request, response);
-    response.writeHead(200, {'content-Type': 'application/json'});
-    response.end();
+    if(request.url === '/classes/typing'){
+      postMsg[request.url](request, response);
+    }else {
+      postMsg[request.url](request, response);
+      response.writeHead(201, {'content-Type': 'application/json'});
+      response.end();
+    }
   }
   if(request.method === 'GET'){
-    console.log(request.url);
     if(request.url === '/classes/messages'){
       getMsg[request.url](request, response);
-    }else {
+    }else if(getIndex[request.url]) {
       getIndex[request.url](request, response);
+    }else{
+      response.writeHead(404, headers);
+      response.end();
     }
   }
   if(request.method === 'OPTIONS'){
     response.writeHead(204, headers);
     response.end();
-
   }
 };
 
